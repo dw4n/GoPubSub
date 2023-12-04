@@ -78,7 +78,7 @@ func (p *AzureServiceBusPublisher) ShutdownServiceBus() error {
 	return nil
 }
 
-func (p *AzureServiceBusPublisher) PublishMessage(model interface{}, topic string) error {
+func (p *AzureServiceBusPublisher) PublishMessage(model interface{}, operationTopic string) error {
 	data, err := json.Marshal(model)
 	if err != nil {
 		return err
@@ -87,11 +87,13 @@ func (p *AzureServiceBusPublisher) PublishMessage(model interface{}, topic strin
 	// Generate a unique MessageId
 	messageId := uuid.New().String()
 	partitionKey := "partitionKey"
+	Subject := operationTopic
 
 	message := &azservicebus.Message{
 		Body:         data,
 		MessageID:    &messageId,
 		PartitionKey: &partitionKey,
+		Subject:      &Subject,
 	}
 	// Check the shutdown channel before sending the message
 	select {
