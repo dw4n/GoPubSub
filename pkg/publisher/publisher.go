@@ -28,7 +28,7 @@ type AzureServiceBusPublisher struct {
 	topicName string
 }
 
-func InitializeServiceBusPublisher(connStr string, topicName string) *AzureServiceBusPublisher {
+func InitializeServiceBus(connStr string, topicName string) *AzureServiceBusPublisher {
 	publisherOnce.Do(func() {
 		client, err := azservicebus.NewClientFromConnectionString(connStr, nil)
 		if err != nil {
@@ -54,7 +54,7 @@ func InitializeServiceBusPublisher(connStr string, topicName string) *AzureServi
 	return serviceBusPublisher
 }
 
-func ShutdownServiceBusPublisher() {
+func ShutdownServiceBus() {
 	close(shutdownChannel)
 
 	if serviceBusPublisher != nil {

@@ -32,7 +32,7 @@ func main() {
 	subscriber.InitializeServiceBus(ConnStrSubscriber)
 
 	// Initialize the publisher and store it in Fiber's c.Locals
-	publisherInstance := publisher.InitializeServiceBusPublisher(ConnStrPublisher, TopicName)
+	publisherInstance := publisher.InitializeServiceBus(ConnStrPublisher, TopicName)
 
 	app.Use(func(c *fiber.Ctx) error {
 		c.Locals("publisher", publisherInstance)
@@ -42,8 +42,8 @@ func main() {
 	SetupRoutes(app)
 
 	// Gracefully shutdown Service Bus resources when the application exits.
-	defer subscriber.ShutdownServiceBusSubscriber()
-	defer publisher.ShutdownServiceBusPublisher()
+	defer subscriber.ShutdownServiceBus()
+	defer publisher.ShutdownServiceBus()
 
 	log.Fatal(app.Listen(":3000"))
 }

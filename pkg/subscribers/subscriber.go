@@ -33,7 +33,7 @@ func InitializeServiceBus(connStr string) {
 }
 
 // ShutdownServiceBus gracefully closes the Service Bus client.
-func ShutdownServiceBusSubscriber() {
+func ShutdownServiceBus() {
 	close(shutdownChannel)
 
 	if client != nil {
